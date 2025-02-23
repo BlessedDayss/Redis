@@ -7,15 +7,13 @@ namespace RedisCleaner
     { 
         public bool ClearRedisCache()
         {
-            // Check current OS
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                // Windows: using WSL
+                
                 return ExecuteCommand("wsl", "redis-cli FLUSHDB");
             }
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
-                // Linux: direct command
                 return ExecuteCommand("redis-cli", "FLUSHDB");
             }
             {
