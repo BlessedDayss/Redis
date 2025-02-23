@@ -21,3 +21,4 @@ packages/
 
 # Ignore logs
 *.log
+*.sln
