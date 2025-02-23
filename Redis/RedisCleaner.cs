@@ -38,8 +38,8 @@ namespace RedisCleaner
 
                 process.Start();
 
-                string output = process.StandardOutput.ReadToEnd();
-                string errors = process.StandardError.ReadToEnd();
+                var output = process.StandardOutput.ReadToEnd();
+                var errors = process.StandardError.ReadToEnd();
 
                 process.WaitForExit();
 
