@@ -1,7 +1,23 @@
-﻿/.idea/.idea.Redis/.idea/.gitignore
-/.idea/.idea.Redis/.idea/encodings.xml
-/.idea/.idea.Redis/.idea/git_toolbox_blame.xml
-/.idea/.idea.Redis/.idea/git_toolbox_prj.xml
-/.idea/.idea.Redis/.idea/indexLayout.xml
-/Redis.sln
-/.idea/.idea.Redis/.idea/vcs.xml
+﻿# Rider / JetBrains
+.idea/
+*.DotSettings.user
+
+# Build directories
+bin/
+obj/
+
+# Ignore Rider / Visual Studio files
+*.suo
+*.user
+*.rsuser
+
+# Ignore packages if using NuGet
+packages/
+
+# Ignore compiled files
+*.exe
+*.dll
+*.pdb
+
+# Ignore logs
+*.log
