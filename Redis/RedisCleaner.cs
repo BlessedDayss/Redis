@@ -1,25 +1,27 @@
+using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 namespace RedisCleaner
 {
     public class RedisCacheCleaner
-    { 
+    {
         public bool ClearRedisCache()
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                
-                return ExecuteCommand("wsl", "redis-cli FLUSHDB");
+                return ExecuteCommand("redis-cli", "FLUSHDB");
             }
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
                 return ExecuteCommand("redis-cli", "FLUSHDB");
-            }else
+            }
+            else
             {
                 throw new NotSupportedException("Unsupported OS platform");
             }
         }
+
         private bool ExecuteCommand(string command, string arguments)
         {
             try
@@ -35,29 +37,27 @@ namespace RedisCleaner
                 };
 
                 using var process = new Process { StartInfo = processInfo };
-
                 process.Start();
 
-                var output = process.StandardOutput.ReadToEnd();
-                var errors = process.StandardError.ReadToEnd();
+                string output = process.StandardOutput.ReadToEnd();
+                string errors = process.StandardError.ReadToEnd();
 
                 process.WaitForExit();
 
                 if (process.ExitCode == 0)
                 {
-                    Console.WriteLine($"Redis return: {output}");
+                    Console.WriteLine($"Redis return: {output.Trim()}");
                     return true;
                 }
                 else
                 {
-                    Console.WriteLine($"Error clearing Redis (ExitCode={process.ExitCode} + {errors}):");
+                    Console.WriteLine($"Error clearing Redis (ExitCode={process.ExitCode}): {errors.Trim()}");
                     return false;
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine("An exception occurred:");
-                Console.WriteLine(ex.Message);
+                Console.WriteLine($"Exception executing command '{command} {arguments}': {ex.Message}");
                 return false;
             }
         }

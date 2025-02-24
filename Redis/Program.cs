@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Configuration;
 
 namespace RedisCleaner
+
 {
     internal static class Program
     {
