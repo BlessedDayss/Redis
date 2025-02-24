@@ -1,8 +1,7 @@
+namespace RedisCleaner
+{
 using Microsoft.Extensions.Configuration;
 
-namespace RedisCleaner
-
-{
     internal static class Program
     {
         static void Main(string[] args)
