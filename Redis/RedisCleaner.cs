@@ -15,7 +15,7 @@ namespace RedisCleaner
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
                 return ExecuteCommand("redis-cli", "FLUSHDB");
-            }
+            }else
             {
                 throw new NotSupportedException("Unsupported OS platform");
             }
