@@ -6,7 +6,6 @@ namespace RedisCleaner
     {
         static void Main(string[] args)
         {
-            
             var configuration = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
                 .AddCommandLine(args)

@@ -48,7 +48,7 @@ namespace RedisCleaner
                     Console.WriteLine($"Redis return: {output}");
                     return true;
                 }
-                
+                else
                 {
                     Console.WriteLine($"Error clearing Redis (ExitCode={process.ExitCode} + {errors}):");
                     return false;
