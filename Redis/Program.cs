@@ -1,6 +1,6 @@
 namespace RedisCleaner
 {
-using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.Configuration;
 
     internal static class Program
     {
@@ -10,15 +10,15 @@ using Microsoft.Extensions.Configuration;
                 .AddJsonFile("appsettings.json")
                 .AddCommandLine(args)
                 .Build();
-
-
-            bool clearRedisCache = configuration.GetValue<bool>("Features:SkipClearRedisCache");
-            Console.WriteLine($"Clearing Redis cache: {clearRedisCache}");
+            
+            bool skipClearRedisCache = configuration.GetValue<bool>("Features:SkipClearRedisCache");
+            string redisDatabase = configuration.GetValue<string>("Redis:Database") ?? "0";
+            
+            Console.WriteLine($"Clearing Redis cache: {!skipClearRedisCache}");
         
-            if (clearRedisCache)
+            if (!skipClearRedisCache)
             {
-                var cleaner = new RedisCacheCleaner();
-                bool result = cleaner.ClearRedisCache(databaseNumber: 15);
+                RedisExecutor.ClearRedisCache(redisDatabase);
             }
             else
             {
