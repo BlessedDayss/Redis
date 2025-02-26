@@ -10,35 +10,20 @@ using Microsoft.Extensions.Configuration;
                 .AddJsonFile("appsettings.json")
                 .AddCommandLine(args)
                 .Build();
-            
-            bool clearRedisCache = configuration.GetValue<bool>("Feature:ClearRedisCache", true);
 
+
+            bool clearRedisCache = configuration.GetValue<bool>("Features:SkipClearRedisCache");
             Console.WriteLine($"Clearing Redis cache: {clearRedisCache}");
-
+        
             if (clearRedisCache)
             {
-                var cleanerCache = new RedisCleaner.RedisCacheCleaner();
-                cleanerCache.ClearRedisCache();
+                var cleaner = new RedisCacheCleaner();
+                bool result = cleaner.ClearRedisCache(databaseNumber: 15);
             }
             else
             {
                 Console.WriteLine("Skipping Redis cache cleaning.");
             }
-            
-            // Added for testing purposes
-            // Uncomment to test the RedisCacheCleaner class
-            // 
-            //
-            // var cleaner = new RedisCacheCleaner();
-            //
-            // if (cleaner.ClearRedisCache())
-            // {
-            //     Console.WriteLine("Cache cleaned!");
-            // }
-            // else
-            // {
-            //     Console.WriteLine("Cache was not cleaned due to an error.");
-            // }
         }
     }
 }
