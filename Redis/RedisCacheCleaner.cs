@@ -29,14 +29,13 @@ public class RedisExecutor
             string output = process.StandardOutput.ReadToEnd();
             string errors = process.StandardError.ReadToEnd();
             process.WaitForExit();
-            
             if (process.ExitCode == 0) {
                 // Успешное выполнение, но проверяем наличие ошибок
                 if (!string.IsNullOrWhiteSpace(errors)) {
                     Console.WriteLine($"Redis executed with errors: {errors.Trim()}, Output: '{output.Trim()}'");
                     return false;
                 }
-                
+
                 // Вывод результата
                 if (output.Contains("OK")) {
                     Console.WriteLine($"Redis cleaned successfully. Output: '{output.Trim()}'");
@@ -46,7 +45,6 @@ public class RedisExecutor
                 }
                 return true;
             }
-            
             return HandleProcessErrors(errors);
         } catch (Exception ex) {
             Console.WriteLine(
@@ -54,13 +52,12 @@ public class RedisExecutor
             return false;
         }
     }
-    
+
     private static bool HandleProcessErrors(string errors) {
         if (string.IsNullOrWhiteSpace(errors)) {
             Console.WriteLine("Unknown Redis error occurred.");
             return false;
         }
-        
         if (errors.Contains("Connection refused"))
             Console.WriteLine("No connection to Redis. Server is stopped or unavailable.");
         else if (errors.Contains("WRONGPASS") || errors.Contains("NOAUTH"))
@@ -71,7 +68,6 @@ public class RedisExecutor
             Console.WriteLine("Access denied. Check Redis access permissions.");
         else
             Console.WriteLine($"Redis error: {errors}");
-            
         return false;
     }
 }
