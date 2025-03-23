@@ -30,13 +30,11 @@ public class RedisExecutor
             string errors = process.StandardError.ReadToEnd();
             process.WaitForExit();
             if (process.ExitCode == 0) {
-                // Успешное выполнение, но проверяем наличие ошибок
                 if (!string.IsNullOrWhiteSpace(errors)) {
                     Console.WriteLine($"Redis executed with errors: {errors.Trim()}, Output: '{output.Trim()}'");
                     return false;
                 }
 
-                // Вывод результата
                 if (output.Contains("OK")) {
                     Console.WriteLine($"Redis cleaned successfully. Output: '{output.Trim()}'");
                 } else {
